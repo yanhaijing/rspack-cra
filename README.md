@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# Create React App 迁移 rspack 示例
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+本示例使用 yarn 1.22.19 安装依赖。
 
-## Available Scripts
+使用 2023-10-19 号的 create-react-app@5.0.1 脚手架创建的项目，接入了rspack@0.3.11，同时给 create-react-app 添加了测试环境的构建(build:test)。
 
-In the project directory, you can run:
+## 你的项目如何接入 rspack
 
-### `npm start`
+第 1 步，将模板里面的如下文件复制到你的项目中：
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-   config
+-   rspack.config.js
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+第 2 步，修改 package.json 添加如下字段
 
-### `npm test`
+```json
+{
+    "scripts": {
+        "start": "rspack serve",
+        "build": "rspack build",
+        "build:test": "ENV=test rspack build"
+    },
+    "dependencies": {
+        "core-js": "3.30.1"
+    },
+    "devDependencies": {
+        "@rspack/cli": "^0.3.11",
+        "webpack-merge": "^5.10.0",
+        "eslint-rspack-plugin": "4.0.0-alpha",
+        "less": "4.1.3",
+        "less-loader": "7.3",
+        "postcss-loader": "6.2.1",
+        "resolve-url-loader": "4.0.0",
+        "sass-loader": "12.6.0"
+    }
+}
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+现在可以运行如下命令，进行验证：
 
-### `npm run build`
+```bash
+yarn start
+yarn build
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 这个项目搭建步骤如下
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+$ npx create-react-app@5.0.1 rspack-cra --template typescript
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 迁移遇到的问题
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+https://github.com/web-infra-dev/rspack/issues/4295
