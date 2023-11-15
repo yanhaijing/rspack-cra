@@ -1,6 +1,16 @@
 import React from 'react';
 import logo from './logo.svg?url';
 import './App.css';
+import Clipboard from 'clipboard';
+console.log(Clipboard);
+debugger
+const clipboard = new Clipboard('.copy-btn');
+clipboard.on('success', (e) => {
+  console.log('复制成功');
+  e.clearSelection();
+});
+
+clipboard.on('error', () => console.error('复制失败'));
 
 function App() {
   return (
